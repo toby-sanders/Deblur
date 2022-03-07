@@ -1,4 +1,4 @@
-function [psf,psf1,psf2] = makeLangPSF(n,pixelSize)
+function psf = makeLangPSF(n,pixelSize)
 
 % make a 1D Langevian function
 
@@ -22,9 +22,19 @@ else, y = linspace(-yBound,yBound-pixelSize,d1)';
 end
 [X,Y] = meshgrid(x,y);
 
-psf1 = coth(x) - 1./x;
-psf2 = x/3 - x.^3/45 + 2*x.^5/945 - x.^7/4725;
+S = abs(x)<.1;
 
-S = abs(x)<1/2;
+% this is the anti-derivative of the PSF
+% psf1 = coth(x) - 1./x;
+% psf2 = x/3 - x.^3/45 + 2*x.^5/945 - x.^7/4725;
+% psf = psf1;
+% psf(S) = psf2(S);
+
+psf1 = 1./x.^2 - 1./sinh(x).^2;
+psf2 = 1/3 - 3*x.^2/45 + 10*x.^4/945 - 7*x.^6/4725;
 psf = psf1;
 psf(S) = psf2(S);
+
+
+
+

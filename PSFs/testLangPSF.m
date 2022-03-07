@@ -1,11 +1,12 @@
 clear;
-d = 128;
-P = .1;
+d = 64;
+P = .25;
 
-[psf,psf1,psf2] = makeLangPSF(d,P);
+[psf] = makeLangPSF(d,P);
 
 figure(212);hold off;
 plot(psf);hold on;
-% plot(psf1);
+%  plot(psf0);
+% plot(diff(psf)/P);
 % plot(psf2);
 % hold off;

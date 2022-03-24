@@ -21,7 +21,7 @@ end
     
 % very important to know the noise level for SURE!!!
 if ~isfield(opts,'sigma')
-    sigma = determineNoise1D(I,10); % noise estimation
+    sigma = determineNoise1D(ifft2(Ihat),10); % noise estimation
 else
     sigma = opts.sigma;
 end

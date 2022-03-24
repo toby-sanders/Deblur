@@ -36,6 +36,11 @@ if ~isfield(opts,'V') % power spectrum of the regularizer
     V = my_Fourier_filters(2,1,p,q,1);
 else, V = opts.V;
 end
+if ~isfield(opts,'alphaTol')
+    alphaTolerance = 1e-1/N;
+else
+    alphaTolerance = opts.alphaTol;
+end
 
 alpha = 1/N*ones(N,1);
 % alpha0 = .05;
@@ -60,7 +65,7 @@ end
 
 hhat2 = abs(hhat).^2;
 gam = 0.5; % correction factor to improve fixed-point convergence
-alphaTolerance = 1e-1/N;
+
 
 
 SS = 1:N;
@@ -80,8 +85,9 @@ for i = 1:iter
     end
     
     % throw out very small coefficients to reduce computations
-    SS = find(alpha>alphaTolerance)';
-    SS2 = alpha<=alphaTolerance;
+    iterTol = alphaTolerance*min(sum(alpha),1);
+    SS = find(alpha>iterTol)';
+    SS2 = alpha<=iterTol;
     alpha(SS2) = 0;
     
     % normalize the coefficients

@@ -9,11 +9,11 @@ end
 
 % make centered meshgrid
 if mod(n,2)==1
-    xBound = pixelSize*(n-1)/2;
+    xBound = (n-1)/2;
     x = linspace(-xBound,xBound,n)';
 else
-    xBound = pixelSize*n/2;
-    x = linspace(-xBound,xBound-pixelSize,n)';
+    xBound = n/2;
+    x = linspace(-xBound,xBound-1,n)';
 end
 psf = exp(-x.^2/(2*sigma^2));
 psf = ifftshift(psf/sum(sum(psf)));

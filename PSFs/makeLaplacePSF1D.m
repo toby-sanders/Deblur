@@ -9,8 +9,12 @@ end
 
 
 % make centered meshgrid
-if mod(n,2)==1, x = linspace(-n/2,n/2,n)';
-else, x = linspace(-n/2,n/2-1,n)';
+if mod(n,2)==1
+    xBound = pixelSize*(n-1)/2;
+    x = linspace(-xBound,xBound,n)';
+else
+    xBound = pixelSize*n/2;
+    x = linspace(-xBound,xBound-pixelSize,n)';
 end
 
 psf = exp(-abs(x)*sqrt(2)/sigma);

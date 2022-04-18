@@ -35,14 +35,16 @@ yy = 1:900;
 % I = I0(yy,xx,channel);
 % path = 'C:\Users\toby.sanders\Dropbox\archives\data\testImages\jupiter\';
 % fname = 'jupiterComet.tif';
-path = 'C:\Users\toby.sanders\Dropbox\archives\data\testImages\';
-fname = 'bigradient_conv.tif';
+% path = 'C:\Users\toby.sanders\Dropbox\archives\data\testImages\';
+path = 'C:\Users\Toby Sanders\Dropbox\archives\data\testImages\';
+% fname = 'bigradient_conv.tif';
+fname = 'jupiter_observed.tif';
 I = (im2double((imread([path,fname]))));
 % I = rgb2gray(im2double(imread('saturn.png')));
 % I = I(yy,xx);
 I = padEdgesColorIm(I,pad);
 [d1,d2] = size(I);
-[I,sigma] = add_Wnoise(I,SNR);
+% [I,sigma] = add_Wnoise(I,SNR);
 b = I;
 
 V = my_Fourier_filters(order,levels,d1,d2,1);
@@ -50,7 +52,7 @@ V = my_Fourier_filters(order,levels,d1,d2,1);
 Fb = fft2(b);
 
 % sigma = determineNoise1D(b,10);
-
+sigma = 3.0/255;
 
 opts.sigma = sigma;
 opts.V = V;
@@ -73,7 +75,7 @@ omegaEY = out2.omegasY(end);
 thetaE = out2.thetas(end);
 [h,hhat] = makeGausPSF([d1,d2],omegaEX,omegaEY,thetaE);
 % [h2,hhat2] = makeGausPSF([d1,d2],out1.omegasX(end),out1.omegasY(end),0);
-filt1 = conj(hhat)./(abs(hhat).^2 + out2.lambdas(end).*opts.V);
+filt1 = conj(hhat)./(abs(hhat).^2 + out2.lambdas(end)/4.*opts.V);
 % filt2 = conj(hhat2)./(abs(hhat2).^2 + out2.lambdas(end).*opts.V);
 rec1 = real(ifft2(Fb.*filt1));
 % rec10 = real(ifft2(Fb.*filt2));
@@ -110,6 +112,8 @@ imagesc(fftshift(h)/max(h(:)));title('angled PSF recovery')
 axis([round(d2/2)-5,round(d2/2)+6,round(d1/2)-5,round(d1/2)+6]);
 nexttile;
 loglog(out2.UPREs);
+title('SURE values');
+xlabel('iteration');
 
 figure(538);tiledlayout(2,2,'tilespacing','compact');colormap(gray);
 % plot([width, width],[min(SUREall),max(SUREall)],':'); hold off;

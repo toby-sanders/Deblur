@@ -10,11 +10,19 @@ end
 
 
 % make centered meshgrid
-if mod(d2,2)==1, x = linspace(-d2/2,d2/2,d2)';
-else, x = linspace(-d2/2,d2/2-1,d2)';
+if mod(d2,2)==1
+    xBound = pixelSize*(d2-1)/2;
+    x = linspace(-xBound,xBound,d2)';
+else
+    xBound = pixelSize*d2/2;
+    x = linspace(-xBound,xBound-pixelSize,d2)';
 end
-if mod(d1,2)==1, y = linspace(-d1/2,d1/2,d1)';
-else, y = linspace(-d1/2,d1/2-1,d1)';
+if mod(d1,2)==1
+    yBound = pixelSize*(d1-1)/2;
+    y = linspace(-yBound,yBound,d1)';
+else
+    yBound = pixelSize*d1/2;
+    y = linspace(-yBound,yBound-pixelSize,d1)';
 end
 [x,y] = meshgrid(x,y);
 X = cosd(theta)*x/d2 + sind(theta)*y/d1;

@@ -14,15 +14,20 @@ elseif nargin<5
     pixelSize = 1;
 end
 
-xBound = pixelSize*d2/2;
-yBound = pixelSize*d1/2;
-
 % make centered meshgrid
-if mod(d2,2)==1, x = linspace(-xBound,xBound,d2)';
-else, x = linspace(-xBound,xBound-pixelSize,d2)';
+if mod(d2,2)==1
+    xBound = pixelSize*(d2-1)/2;
+    x = linspace(-xBound,xBound,d2)';
+else
+    xBound = pixelSize*d2/2;
+    x = linspace(-xBound,xBound-pixelSize,d2)';
 end
-if mod(d1,2)==1, y = linspace(-yBound,yBound,d1)';
-else, y = linspace(-yBound,yBound-pixelSize,d1)';
+if mod(d1,2)==1
+    yBound = pixelSize*(d1-1)/2;
+    y = linspace(-yBound,yBound,d1)';
+else
+    yBound = pixelSize*d1/2;
+    y = linspace(-yBound,yBound-pixelSize,d1)';
 end
 [x,y] = meshgrid(x,y);
 X = cosd(theta)*x + sind(theta)*y;

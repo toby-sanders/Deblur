@@ -5,7 +5,8 @@ clear;
 rng(2023);
 
 % load in data and set telescope parameters
-fname =  'C:\Users\toby.sanders\Desktop\Seasat Data Set\SAT10967_0001.hd5';
+% fname =  'C:\Users\toby.sanders\Desktop\Seasat Data Set\SAT10967_0001.hd5';
+fname = 'C:\Users\toby.sanders\Dropbox (Personal)\archives\data\MFBD\Seasat Data Set\SAT10967_0001.hd5'
 blurred = h5read(fname,'/SensorPC/Data');
 background = h5read(fname,'/SensorPC/Background');
 yy = 126:425;

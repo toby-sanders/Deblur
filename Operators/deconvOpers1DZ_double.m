@@ -6,12 +6,15 @@ switch mode
         x = reshape(x,p,q);
         xhat = fft(x,[],2);
         y1 = ifft(xhat.*hhat,[],2);
-        y2 = ifft(xhat.*conj(hhat),[],2);
+        y2 = ifft(xhat.*(hhat),[],2);
+        % don't need to conjugate multiplication
+        % y2 = ifft(xhat.*conj(hhat),[],2);
         y = [y1(:);y2(:)];
     case 2
         x = reshape(x,p,q,2);
         xhat = fft(x,[],2);
         y1 = ifft(xhat(:,:,1).*conj(hhat),[],2);
-        y2 = ifft(xhat(:,:,2).*hhat,[],2);
+        y2 = ifft(xhat(:,:,2).*conj(hhat),[],2);
+        % y2 = ifft(xhat(:,:,2).*hhat,[],2);
         y = y1(:) + y2(:);
 end
